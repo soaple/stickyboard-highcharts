@@ -1,0 +1,156 @@
+// src/components/highcharts/SBH_Highcharts.js
+
+import React from 'react';
+import PropTypes from 'prop-types';
+
+import { withStyles } from '@material-ui/core/styles';
+
+import ReactResizeDetector from 'react-resize-detector';
+
+import Highcharts from 'highcharts';
+
+import UUIDv1 from 'uuid/v1';
+import Moment from 'moment-timezone';
+
+const styles = theme => ({
+    root: {
+        width: '100%',
+        height: '100%',
+    },
+});
+
+class SBH_Highcharts extends React.Component {
+    constructor (props) {
+        super(props);
+
+        this.chart = {};
+
+        this.state = {
+            chartId: UUIDv1()
+        }
+    }
+
+    componentDidMount () {
+        this.chart = Highcharts.chart(this.state.chartId, {
+            chart: {
+                type: this.props.chartType,
+            },
+
+            title: {
+                text: this.props.title
+            },
+
+            xAxis: {
+                categories: this.jsonArrayToSeriesData(
+                    this.props.xAxisDataKey,
+                    this.props.data,
+                    (value) => {
+                        return Moment(new Date(value)).format('YY-MM-DD');
+                    }),
+            },
+
+            yAxis: {
+                title: {
+                    text: this.props.yAxisDataKey,
+                }
+            },
+
+            plotOptions: {
+                series: {
+                    label: {
+                        connectorAllowed: false
+                    },
+                }
+            },
+
+            series: [
+                {
+                    name: this.props.yAxisDataKey,
+                    data: this.jsonArrayToSeriesData(this.props.yAxisDataKey, this.props.data),
+                }
+            ],
+
+            responsive: {
+                rules: [{
+                    condition: {
+                        maxWidth: 500
+                    },
+                    chartOptions: {
+                        legend: {
+                            align: 'center',
+                            verticalAlign: 'bottom',
+                            layout: 'horizontal'
+                        },
+                        yAxis: {
+                            labels: {
+                                align: 'left',
+                                x: 0,
+                                y: -5
+                            },
+                            title: {
+                                text: null
+                            }
+                        },
+                        subtitle: {
+                            text: null
+                        },
+                        credits: {
+                            enabled: false
+                        }
+                    }
+                }]
+            },
+
+            credits: {
+                enabled: false
+            },
+        });
+    }
+
+    onResize = () => {
+        this.chart.setSize(
+            $('#' + this.state.chartId).width(),
+            $('#' + this.state.chartId).height(),
+            false);
+    }
+
+    jsonArrayToSeriesData = (name, jsonArray, formatter) => {
+        var seriesData = [];
+
+        jsonArray.map((jsonObject) => {
+            // console.log(jsonObject);
+
+            if (formatter && typeof(formatter) === 'function') {
+                seriesData.push(formatter(jsonObject[name]));
+            } else {
+                seriesData.push(jsonObject[name]);
+            }
+        });
+
+        return seriesData;
+    }
+
+    render () {
+        const { chartId } = this.state;
+        const { classes, theme } = this.props
+
+        return (
+            <div
+                id={chartId}
+                className={classes.root}>
+                <ReactResizeDetector
+                    resizableElementId={chartId}
+                    handleWidth
+                    handleHeight
+                    onResize={this.onResize} />
+            </div>
+        )
+    }
+}
+
+SBH_Highcharts.propTypes = {
+    classes: PropTypes.object.isRequired,
+    theme: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles, { withTheme: true })(SBH_Highcharts);
