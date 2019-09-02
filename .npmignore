@@ -1,4 +1,5 @@
-src
-demo
+src/
+demo/
+node_modules/
 .babelrc
-webpack.config.js
+webpack.*.js
