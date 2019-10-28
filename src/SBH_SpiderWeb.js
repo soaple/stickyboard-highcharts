@@ -2,8 +2,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-
-import { withStyles } from '@material-ui/core/styles';
+import styled from 'styled-components';
 
 import ReactResizeDetector from 'react-resize-detector';
 
@@ -12,12 +11,10 @@ import Highcharts from 'highcharts';
 import UUIDv1 from 'uuid/v1';
 import Moment from 'moment-timezone';
 
-const styles = theme => ({
-    root: {
-        width: '100%',
-        height: '100%',
-    },
-});
+const Root = styled.div`
+    width: 100%;
+    height: 100%;
+`;
 
 class SBH_SpiderWeb extends React.Component {
     constructor (props) {
@@ -93,27 +90,22 @@ class SBH_SpiderWeb extends React.Component {
             false);
     }
 
-    render () {
+    render() {
         const { chartId } = this.state;
-        const { classes, theme } = this.props
 
         return (
-            <div
-                id={chartId}
-                className={classes.root}>
+            <Root
+                id={chartId}>
                 <ReactResizeDetector
                     resizableElementId={chartId}
                     handleWidth
                     handleHeight
                     onResize={this.onResize} />
-            </div>
+            </Root>
         )
     }
 }
 
-SBH_SpiderWeb.propTypes = {
-    classes: PropTypes.object.isRequired,
-    theme: PropTypes.object.isRequired,
-};
+SBH_SpiderWeb.propTypes = {};
 
-export default withStyles(styles, { withTheme: true })(SBH_SpiderWeb);
+export default SBH_SpiderWeb;

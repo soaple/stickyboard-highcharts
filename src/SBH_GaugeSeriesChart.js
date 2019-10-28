@@ -2,8 +2,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-
-import { withStyles } from '@material-ui/core/styles';
+import styled from 'styled-components';
 
 import ReactResizeDetector from 'react-resize-detector';
 
@@ -17,51 +16,51 @@ import UUIDv1 from 'uuid/v1';
 
 import { Textfit } from 'react-textfit';
 
-const styles = theme => ({
-    root: {
-        width: '100%',
-        height: '100%',
-    },
-    chartContainer: {
-        width: '100%',
-        height: '100%',
-    },
-    title: {
-        width: '100%',
-        height: '10%',
-        textAlign: 'center',
-        position: 'absolute',
-        top: '3%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        fontWeight: 600,
-    },
-    icon: {
-        width: '35%',
-        height: '35%',
-        textAlign: 'center',
-        position: 'absolute',
-        top: '55%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-    },
-    valueContainer: {
-        width: '30%',
-        height: '20%',
-        textAlign: 'center',
-        position: 'absolute',
-        top: '90%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-    },
-    value: {
-        fontWeight: 800,
-    },
-    unit: {
-        fontSize: '0.7em',
-        fontWeight: 500,
-    }
-});
+const Root = styled.div`
+    width: 100%;
+    height: 100%;
+`;
+
+const ChartContainer = styled.div`
+    width: 100%;
+    height: 100%;
+`;
+
+const TitleTextfit = styled(Textfit)`
+    width: 100%;
+    height: 10%;
+    textAlign: center;
+    position: absolute;
+    top: 3%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    fontWeight: 600;
+    ${props => props.color && `
+        color: ${props.color};
+    `}
+`;
+
+const ValueTextfit = styled(Textfit)`
+    width: 30%;
+    height: 20%;
+    textAlign: center;
+    position: absolute;
+    top: 90%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    ${props => props.color && `
+        color: ${props.color};
+    `}
+`;
+
+const Value = styled.span`
+    fontWeight: 800;
+`;
+
+const Unit = styled.span`
+    fontSize: 0.7em;
+    fontWeight: 500;
+`;
 
 class SBH_GaugeSeriesChart extends React.Component {
     constructor (props) {
@@ -228,57 +227,50 @@ class SBH_GaugeSeriesChart extends React.Component {
         return seriesData;
     }
 
-    render () {
+    render() {
         const { chartId } = this.state;
-        const { classes, theme } = this.props
 
         return (
-            <div className={classes.root}>
+            <Root>
                 {/* Chart */}
-                <div
-                    id={chartId}
-                    className={classes.chartContainer}>
+                <ChartContainer
+                    id={chartId}>
                     <ReactResizeDetector
                         resizableElementId={chartId}
                         handleWidth
                         handleHeight
                         onResize={this.onResize} />
-                </div>
+                </ChartContainer>
 
                 {/* Title */}
-                <Textfit
+                <TitleTextfit
                     mode="single"
                     min={20}
                     max={200}
                     forceSingleModeWidth={false}
-                    className={classes.title}
-                    style={{color: this.props.baseColor}}>
+                    color={this.props.baseColor}>
                     {this.props.title}
-                </Textfit>
+                </TitleTextfit>
 
                 {/* Value */}
-                <Textfit
+                <ValueTextfit
                     mode="single"
                     min={20}
                     max={200}
                     forceSingleModeWidth={false}
-                    className={classes.valueContainer}
-                    style={{color: this.props.baseColor}}>
-                    <span className={classes.value}>
+                    color={this.props.baseColor}>
+                    <Value>
                         {this.props.value.toFixed(this.props.precision) + ' '}
-                    </span>
-                    <span className={classes.unit}>
+                    </Value>
+                    <Unit>
                         {this.props.unit}
-                    </span>
-                </Textfit>
-            </div>
+                    </Unit>
+                </ValueTextfit>
+            </Root>
         )
     }
 }
 
-SBH_GaugeSeriesChart.propTypes = {
-    classes: PropTypes.object.isRequired,
-    theme: PropTypes.object.isRequired,
-};
+SBH_GaugeSeriesChart.propTypes = {};
 
-export default withStyles(styles, { withTheme: true })(SBH_GaugeSeriesChart);
+export default SBH_GaugeSeriesChart;
