@@ -83,11 +83,8 @@ class SBH_SpiderWeb extends React.Component {
         });
     }
 
-    onResize = () => {
-        this.chart.setSize(
-            $('#' + this.state.chartId).width(),
-            $('#' + this.state.chartId).height(),
-            false);
+    onResize = (width, height) => {
+        this.chart.setSize(width, height, false);
     }
 
     render() {

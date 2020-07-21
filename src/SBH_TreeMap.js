@@ -116,11 +116,8 @@ class SBH_TreeMap extends React.Component {
         });
     }
 
-    onResize = () => {
-        this.chart.setSize(
-            $('#' + this.state.chartId).width(),
-            $('#' + this.state.chartId).height(),
-            false);
+    onResize = (width, height) => {
+        this.chart.setSize(width, height, false);
     }
 
     jsonArrayToSeriesData = (name, jsonArray, formatter) => {

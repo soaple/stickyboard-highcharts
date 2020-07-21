@@ -78,10 +78,6 @@ class SBH_PieChart extends React.Component {
     onResize = (width, height) => {
         console.log('onResize', width, height);
         this.chart.setSize(width, height, false);
-        // this.chart.setSize(
-        //     $('#' + this.state.chartId).width(),
-        //     $('#' + this.state.chartId).height(),
-        //     false);
     }
 
     jsonArrayToSeriesData = (valueKey, jsonArray, formatter) => {
