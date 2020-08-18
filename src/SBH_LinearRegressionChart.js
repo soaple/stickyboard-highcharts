@@ -147,10 +147,10 @@ class SBH_LinearRegressionChart extends React.Component {
 
 SBH_LinearRegressionChart.propTypes = {
   title: PropTypes.string,
-  scatterData: PropTypes.object,
-  lineData: PropTypes.object,
-  xAxisDataKey: PropTypes.string,
-  yAxisDataKey: PropTypes.string,
+  scatterData: PropTypes.object.isRequired,
+  lineData: PropTypes.object.isRequired,
+  xAxisDataKey: PropTypes.string.isRequired,
+  yAxisDataKey: PropTypes.string.isRequired,
 };
 
 export default SBH_LinearRegressionChart;
