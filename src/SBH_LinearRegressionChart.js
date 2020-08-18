@@ -1,7 +1,7 @@
 // src/SBH_LinearRegressionChart.js
 import React from "react";
 import styled from "styled-components";
-
+import PropTypes from "prop-types";
 import ReactResizeDetector from "react-resize-detector";
 
 import Highcharts from "highcharts";
@@ -54,12 +54,12 @@ class SBH_LinearRegressionChart extends React.Component {
         {
           type: "line",
           name: this.props.yAxisDataKey,
-          data: this.jsonArrayToLineData(this.props.data),
+          data: this.jsonArrayToLineData(this.props.lineData),
         },
         {
           type: "scatter",
           name: this.props.xAxisDataKey,
-          data: this.jsonArrayToScatterData(this.props.data),
+          data: this.jsonArrayToScatterData(this.props.scatterData),
           marker: {
             radius: 4,
           },
@@ -111,19 +111,19 @@ class SBH_LinearRegressionChart extends React.Component {
 
   jsonArrayToLineData = (jsonArray) => {
     var regressionlineData = [];
-    jsonArray[0].regressionlineData.map((jsonObject) => {
+    jsonArray.map((jsonObject) => {
       regressionlineData.push([jsonObject.xValue, jsonObject.yValue]);
     });
-    //RegressionlineData of jsonArray[0] is jsonArray having two json objects with xValue, yValue. (the two points of regression line)
-    //The two points are the first and last points based on the x-axis of the regression line.
+    // jsonArray has two json objects with xValue, yValue. (the two points of regression line)
+    // The two points are the first and last points based on the x-axis of the regression line.
 
     return regressionlineData;
   };
   jsonArrayToScatterData = (jsonArray) => {
     var scatterData = [];
-    jsonArray[0].scatterData.map((jsonObject) => {
-      //ScatterData of jsonArray[0] is jsonArray having many json objects with xValue, yValue.
-      //ScatterData of jsonArray[0] is raw data.
+    jsonArray.map((jsonObject) => {
+      // jsonArray is jsonArray having many json objects with xValue, yValue.
+      // data of jsonArray is raw data.
       scatterData.push([jsonObject.xValue, jsonObject.yValue]);
     });
     return scatterData;
@@ -145,6 +145,12 @@ class SBH_LinearRegressionChart extends React.Component {
   }
 }
 
-SBH_LinearRegressionChart.propTypes = {};
+SBH_LinearRegressionChart.propTypes = {
+  title: PropTypes.string,
+  scatterData: PropTypes.object,
+  lineData: PropTypes.object,
+  xAxisDataKey: PropTypes.string,
+  yAxisDataKey: PropTypes.string,
+};
 
 export default SBH_LinearRegressionChart;
