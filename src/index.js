@@ -9,7 +9,7 @@ import StreamGraph from './SBH_StreamGraph';
 import SunBurst from './SBH_SunBurst';
 import TreeMap from './SBH_TreeMap';
 import LinearRegressionChart from './SBH_LinearRegressionChart';
-
+import WordCloud from './SBH_WordCloud';
 export {
     Highcharts,
     BoxPlot,
@@ -22,4 +22,5 @@ export {
     SunBurst,
     TreeMap,
     LinearRegressionChart,
+    WordCloud,
 };
