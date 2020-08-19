@@ -26,6 +26,13 @@ class SBH_LinearRegressionChart extends React.Component {
     }
 
     componentDidMount() {
+        const {
+            title,
+            scatterData,
+            lineData,
+            xAxisDataKey,
+            yAxisDataKey,
+        } = this.props;
         this.chart = Highcharts.chart(this.state.chartId, {
             title: {
                 text: this.props.title,
@@ -149,8 +156,18 @@ class SBH_LinearRegressionChart extends React.Component {
 
 SBH_LinearRegressionChart.propTypes = {
     title: PropTypes.string,
-    scatterData: PropTypes.array.isRequired,
-    lineData: PropTypes.array.isRequired,
+    scatterData: PropTypes.arrayOf(
+        PropTypes.shape({
+            xValue: PropTypes.number,
+            yValue: PropTypes.number,
+        })
+    ).isRequired,
+    lineData: PropTypes.arrayOf(
+        PropTypes.shape({
+            xValue: PropTypes.number,
+            yValue: PropTypes.number,
+        }).isRequired
+    ),
     xAxisDataKey: PropTypes.string.isRequired,
     yAxisDataKey: PropTypes.string.isRequired,
 };

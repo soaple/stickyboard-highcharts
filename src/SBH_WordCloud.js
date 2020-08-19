@@ -49,6 +49,7 @@ class SBH_WordCloud extends React.Component {
     };
 
     componentDidMount() {
+        const { title, text, name } = this.props;
         this.chart = Highcharts.chart(this.state.chartId, {
             series: [
                 {
