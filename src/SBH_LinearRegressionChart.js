@@ -166,8 +166,8 @@ SBH_LinearRegressionChart.propTypes = {
         PropTypes.shape({
             xValue: PropTypes.number,
             yValue: PropTypes.number,
-        }).isRequired
-    ),
+        })
+    ).isRequired,
     xAxisDataKey: PropTypes.string.isRequired,
     yAxisDataKey: PropTypes.string.isRequired,
 };
