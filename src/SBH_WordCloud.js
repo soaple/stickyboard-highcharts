@@ -54,12 +54,12 @@ class SBH_WordCloud extends React.Component {
             series: [
                 {
                     type: 'wordcloud',
-                    data: this.textStringToJsonArray(this.props.text),
-                    name: this.props.name,
+                    data: this.textStringToJsonArray(text),
+                    name: name,
                 },
             ],
             title: {
-                text: this.props.title,
+                text: title,
             },
         });
     }

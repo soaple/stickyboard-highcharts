@@ -14,7 +14,7 @@ const Root = styled.div`
     height: 100%;
 `;
 
-class SBH_LinearRegressionChart extends React.Component {
+class SBH_PolynomialRegressionChart extends React.Component {
     constructor(props) {
         super(props);
 
@@ -28,26 +28,35 @@ class SBH_LinearRegressionChart extends React.Component {
     componentDidMount() {
         const {
             title,
+            subtitle,
             rawData,
             lineData,
             xAxisDataKey,
             yAxisDataKey,
         } = this.props;
         this.chart = Highcharts.chart(this.state.chartId, {
+            chart: {
+                type: 'spline',
+            },
             title: {
                 text: title,
             },
-
+            subtitle: {
+                text: subtitle,
+            },
+            yAxis: {
+                title: {
+                    text: yAxisDataKey,
+                },
+            },
             xAxis: {
                 title: {
                     text: xAxisDataKey,
                 },
             },
-
-            yAxis: {
-                title: {
-                    text: yAxisDataKey,
-                },
+            tooltip: {
+                shared: true,
+                valueDecimals: 2,
             },
 
             plotOptions: {
@@ -55,63 +64,24 @@ class SBH_LinearRegressionChart extends React.Component {
                     label: {
                         connectorAllowed: false,
                     },
+                    marker: {
+                        enabled: false,
+                    },
                 },
             },
-
-            series: this.props.series,
 
             series: [
                 {
-                    type: 'line',
-                    name: 'Linear regression',
+                    name: 'Polynomial regression',
+                    // color: '#FF0000',
                     data: this.jsonArrayToLineData(lineData),
                 },
                 {
-                    type: 'scatter',
                     name: 'Raw data',
+                    // color: '#808080',
                     data: this.jsonArrayToRawData(rawData),
-                    marker: {
-                        radius: 4,
-                    },
                 },
             ],
-
-            responsive: {
-                rules: [
-                    {
-                        condition: {
-                            maxWidth: 500,
-                        },
-                        chartOptions: {
-                            legend: {
-                                align: 'center',
-                                verticalAlign: 'bottom',
-                                layout: 'horizontal',
-                            },
-                            yAxis: {
-                                labels: {
-                                    align: 'left',
-                                    x: 0,
-                                    y: -5,
-                                },
-                                title: {
-                                    text: null,
-                                },
-                            },
-                            subtitle: {
-                                text: null,
-                            },
-                            credits: {
-                                enabled: false,
-                            },
-                        },
-                    },
-                ],
-            },
-
-            credits: {
-                enabled: false,
-            },
         });
     }
 
@@ -156,7 +126,7 @@ class SBH_LinearRegressionChart extends React.Component {
     }
 }
 
-SBH_LinearRegressionChart.propTypes = {
+SBH_PolynomialRegressionChart.propTypes = {
     title: PropTypes.string,
     subtitle: PropTypes.string,
     rawData: PropTypes.arrayOf(
@@ -175,4 +145,4 @@ SBH_LinearRegressionChart.propTypes = {
     yAxisDataKey: PropTypes.string.isRequired,
 };
 
-export default SBH_LinearRegressionChart;
+export default SBH_PolynomialRegressionChart;
