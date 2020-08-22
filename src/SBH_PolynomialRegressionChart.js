@@ -1,5 +1,6 @@
 // src/SBH_PolynomialRegressionChart.js
 
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
@@ -94,6 +95,7 @@ class SBH_PolynomialRegressionChart extends React.Component {
         jsonArray.map((jsonObject) => {
             lineData.push([jsonObject.xValue, jsonObject.yValue]);
         });
+
         return lineData;
     };
 

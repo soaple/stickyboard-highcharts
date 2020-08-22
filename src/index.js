@@ -10,11 +10,9 @@ import SunBurst from './SBH_SunBurst';
 import TreeMap from './SBH_TreeMap';
 import LinearRegressionChart from './SBH_LinearRegressionChart';
 import WordCloud from './SBH_WordCloud';
-<<<<<<< Updated upstream
-=======
 import PolynomialRegressionChart from './SBH_PolynomialRegressionChart';
 import HistogramChart from './SBH_HistogramChart';
->>>>>>> Stashed changes
+
 export {
     Highcharts,
     BoxPlot,
@@ -28,9 +26,6 @@ export {
     TreeMap,
     LinearRegressionChart,
     WordCloud,
-<<<<<<< Updated upstream
-=======
     PolynomialRegressionChart,
     HistogramChart,
->>>>>>> Stashed changes
 };
