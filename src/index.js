@@ -11,6 +11,8 @@ import TreeMap from './SBH_TreeMap';
 import LinearRegressionChart from './SBH_LinearRegressionChart';
 import WordCloud from './SBH_WordCloud';
 import PolynomialRegressionChart from './SBH_PolynomialRegressionChart';
+import HistogramChart from './SBH_HistogramChart';
+
 export {
     Highcharts,
     BoxPlot,
@@ -25,4 +27,5 @@ export {
     LinearRegressionChart,
     WordCloud,
     PolynomialRegressionChart,
+    HistogramChart,
 };

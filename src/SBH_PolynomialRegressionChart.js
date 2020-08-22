@@ -1,4 +1,5 @@
-// src/SBH_LinearRegressionChart.js
+// src/SBH_PolynomialRegressionChart.js
+
 
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -94,8 +95,6 @@ class SBH_PolynomialRegressionChart extends React.Component {
         jsonArray.map((jsonObject) => {
             lineData.push([jsonObject.xValue, jsonObject.yValue]);
         });
-        // jsonArray has two json objects with xValue, yValue. (the two points of regression line)
-        // The two points are the first and last points based on the x-axis of the regression line.
 
         return lineData;
     };
@@ -103,8 +102,6 @@ class SBH_PolynomialRegressionChart extends React.Component {
     jsonArrayToRawData = (jsonArray) => {
         var rawData = [];
         jsonArray.map((jsonObject) => {
-            // jsonArray is jsonArray having many json objects with xValue, yValue.
-            // data of jsonArray is raw data.
             rawData.push([jsonObject.xValue, jsonObject.yValue]);
         });
         return rawData;
