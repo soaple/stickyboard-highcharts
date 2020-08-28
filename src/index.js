@@ -12,6 +12,7 @@ import LinearRegressionChart from './SBH_LinearRegressionChart';
 import WordCloud from './SBH_WordCloud';
 import PolynomialRegressionChart from './SBH_PolynomialRegressionChart';
 import HistogramChart from './SBH_HistogramChart';
+import GanttChart from './SBH_GanttChart';
 
 export {
     Highcharts,
@@ -28,4 +29,5 @@ export {
     WordCloud,
     PolynomialRegressionChart,
     HistogramChart,
+    GanttChart,
 };
