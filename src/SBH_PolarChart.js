@@ -19,29 +19,31 @@ const Root = styled.div`
 `;
 
 class SBH_PolarChart extends React.Component {
-    constructor (props) {
+    constructor(props) {
         super(props);
 
         this.chart = {};
 
         this.state = {
-            chartId: UUIDv1()
-        }
+            chartId: UUIDv1(),
+        };
     }
 
-    componentDidMount () {
-        this.chart = Highcharts.chart(this.state.chartId, {
+    componentDidMount() {
+        const { chartId } = this.state;
+
+        this.chart = Highcharts.chart(chartId, {
             chart: {
                 polar: true,
             },
 
             title: {
-                text: this.props.title
+                text: this.props.title,
             },
 
             pane: {
                 startAngle: 0,
-                endAngle: 360
+                endAngle: 360,
             },
 
             xAxis: {
@@ -51,31 +53,34 @@ class SBH_PolarChart extends React.Component {
                 labels: {
                     formatter: function () {
                         return this.value + '°';
-                    }
-                }
+                    },
+                },
             },
 
             yAxis: {
-                min: 0
+                min: 0,
             },
 
             plotOptions: {
                 series: {
                     pointStart: 0,
-                    pointInterval: 45
+                    pointInterval: 45,
                 },
                 column: {
                     pointPadding: 0,
-                    groupPadding: 0
-                }
+                    groupPadding: 0,
+                },
             },
 
             series: [
                 {
                     type: this.props.seriesType,
                     name: this.props.yAxisDataKey,
-                    data: this.jsonArrayToSeriesData(this.props.yAxisDataKey, this.props.data),
-                }
+                    data: this.jsonArrayToSeriesData(
+                        this.props.yAxisDataKey,
+                        this.props.data
+                    ),
+                },
             ],
 
             // series: [{
@@ -94,52 +99,54 @@ class SBH_PolarChart extends React.Component {
             // }],
 
             responsive: {
-                rules: [{
-                    condition: {
-                        maxWidth: 500
-                    },
-                    chartOptions: {
-                        legend: {
-                            align: 'center',
-                            verticalAlign: 'bottom',
-                            layout: 'horizontal'
+                rules: [
+                    {
+                        condition: {
+                            maxWidth: 500,
                         },
-                        yAxis: {
-                            labels: {
-                                align: 'left',
-                                x: 0,
-                                y: -5
+                        chartOptions: {
+                            legend: {
+                                align: 'center',
+                                verticalAlign: 'bottom',
+                                layout: 'horizontal',
                             },
-                            title: {
-                                text: null
-                            }
+                            yAxis: {
+                                labels: {
+                                    align: 'left',
+                                    x: 0,
+                                    y: -5,
+                                },
+                                title: {
+                                    text: null,
+                                },
+                            },
+                            subtitle: {
+                                text: null,
+                            },
+                            credits: {
+                                enabled: false,
+                            },
                         },
-                        subtitle: {
-                            text: null
-                        },
-                        credits: {
-                            enabled: false
-                        }
-                    }
-                }]
+                    },
+                ],
             },
 
             credits: {
-                enabled: false
+                enabled: false,
             },
         });
     }
 
     onResize = (width, height) => {
         this.chart.setSize(width, height, false);
-    }
+    };
 
     jsonArrayToSeriesData = (name, jsonArray, formatter) => {
         var seriesData = [];
         jsonArray.map((jsonObject) => {
             // console.log(jsonObject);
 
-            if (formatter && typeof(formatter) === 'function') {
+            if (formatter && typeof formatter === 'function') {
                 seriesData.push(formatter(jsonObject[name]));
             } else {
                 seriesData.push(jsonObject[name]);
@@ -147,21 +154,21 @@ class SBH_PolarChart extends React.Component {
         });
 
         return seriesData;
-    }
+    };
 
     render() {
         const { chartId } = this.state;
 
         return (
-            <Root
-                id={chartId}>
+            <Root id={chartId}>
                 <ReactResizeDetector
                     resizableElementId={chartId}
                     handleWidth
                     handleHeight
-                    onResize={this.onResize} />
+                    onResize={this.onResize}
+                />
             </Root>
-        )
+        );
     }
 }
 

@@ -1,6 +1,5 @@
 // src/SBH_PolynomialRegressionChart.js
 
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
@@ -27,6 +26,7 @@ class SBH_PolynomialRegressionChart extends React.Component {
     }
 
     componentDidMount() {
+        const { chartId } = this.state;
         const {
             title,
             subtitle,
@@ -35,7 +35,8 @@ class SBH_PolynomialRegressionChart extends React.Component {
             xAxisDataKey,
             yAxisDataKey,
         } = this.props;
-        this.chart = Highcharts.chart(this.state.chartId, {
+
+        this.chart = Highcharts.chart(chartId, {
             chart: {
                 type: 'spline',
             },

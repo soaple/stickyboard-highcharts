@@ -29,13 +29,15 @@ const ChartContainer = styled.div`
 const TitleTextfit = styled(Textfit)`
     width: 100%;
     height: 10%;
-    textAlign: center;
+    textalign: center;
     position: absolute;
     top: 3%;
     left: 50%;
     transform: translate(-50%, -50%);
-    fontWeight: 600;
-    ${props => props.color && `
+    fontweight: 600;
+    ${(props) =>
+        props.color &&
+        `
         color: ${props.color};
     `}
 `;
@@ -43,12 +45,14 @@ const TitleTextfit = styled(Textfit)`
 const IconTextfit = styled(Textfit)`
     width: 35%;
     height: 35%;
-    textAlign: center;
+    textalign: center;
     position: absolute;
     top: 48%;
     left: 50%;
     transform: translate(-50%, -50%);
-    ${props => props.color && `
+    ${(props) =>
+        props.color &&
+        `
         color: ${props.color};
     `}
 `;
@@ -56,38 +60,42 @@ const IconTextfit = styled(Textfit)`
 const ValueTextfit = styled(Textfit)`
     width: 30%;
     height: 20%;
-    textAlign: center;
+    textalign: center;
     position: absolute;
     top: 90%;
     left: 50%;
     transform: translate(-50%, -50%);
-    ${props => props.color && `
+    ${(props) =>
+        props.color &&
+        `
         color: ${props.color};
     `}
 `;
 
 const Value = styled.span`
-    fontWeight: 800;
+    fontweight: 800;
 `;
 
 const Unit = styled.span`
-    fontSize: 0.7em;
-    fontWeight: 500;
+    fontsize: 0.7em;
+    fontweight: 500;
 `;
 
 class SBH_GaugeChart extends React.Component {
-    constructor (props) {
+    constructor(props) {
         super(props);
 
         this.chart = {};
 
         this.state = {
-            chartId: UUIDv1()
-        }
+            chartId: UUIDv1(),
+        };
     }
 
-    componentDidMount () {
-        this.chart = Highcharts.chart(this.state.chartId, {
+    componentDidMount() {
+        const { chartId } = this.state;
+
+        this.chart = Highcharts.chart(chartId, {
             chart: {
                 type: 'solidgauge',
                 backgroundColor: 'rgba(255, 255, 255, 0.0)',
@@ -118,12 +126,12 @@ class SBH_GaugeChart extends React.Component {
                     backgroundColor: this.props.baseColor,
                     innerRadius: '60%',
                     outerRadius: '100%',
-                    shape: 'arc'
-                }
+                    shape: 'arc',
+                },
             },
 
             tooltip: {
-                enabled: false
+                enabled: false,
             },
 
             // the value axis
@@ -136,13 +144,13 @@ class SBH_GaugeChart extends React.Component {
                 stops: [
                     [0.1, this.props.fillColors[0]],
                     [0.5, this.props.fillColors[1]],
-                    [0.9, this.props.fillColors[2]]
+                    [0.9, this.props.fillColors[2]],
                 ],
                 lineWidth: 0,
                 minorTickInterval: null,
                 tickAmount: 2,
                 title: {
-                    y: -70
+                    y: -70,
                 },
                 labels: {
                     y: 24,
@@ -151,7 +159,7 @@ class SBH_GaugeChart extends React.Component {
                         fontWeight: 600,
                         color: this.props.baseColor,
                     },
-                }
+                },
             },
 
             plotOptions: {
@@ -159,37 +167,43 @@ class SBH_GaugeChart extends React.Component {
                     dataLabels: {
                         y: 5,
                         borderWidth: 0,
-                        useHTML: true
-                    }
-                }
+                        useHTML: true,
+                    },
+                },
             },
 
-            series: [{
-                name: '',
-                data: [parseFloat(this.props.value.toFixed(this.props.precision))],
-                // https://api.highcharts.com/highcharts/plotOptions.series.dataLabels
-                dataLabels: {
-                    enabled: false,
-                    useHTML: true,
-                    style: {
-                        textAlign: 'center',
-                        fontSize: '20px',
-                        fontWeight: 600,
-                        color: this.props.baseColor,
+            series: [
+                {
+                    name: '',
+                    data: [
+                        parseFloat(
+                            this.props.value.toFixed(this.props.precision)
+                        ),
+                    ],
+                    // https://api.highcharts.com/highcharts/plotOptions.series.dataLabels
+                    dataLabels: {
+                        enabled: false,
+                        useHTML: true,
+                        style: {
+                            textAlign: 'center',
+                            fontSize: '20px',
+                            fontWeight: 600,
+                            color: this.props.baseColor,
+                        },
+                        verticalAlign: 'bottom',
+                        format: '{y}<br/>' + this.props.unit,
+                        // formatter: () => {
+                        //     return Highcharts.numberFormat(this.y, 2);
+                        // },
                     },
-                    verticalAlign: 'bottom',
-                    format: '{y}<br/>' + this.props.unit,
-                    // formatter: () => {
-                    //     return Highcharts.numberFormat(this.y, 2);
-                    // },
+                    tooltip: {
+                        valueSuffix: ' ' + this.props.unit,
+                    },
                 },
-                tooltip: {
-                    valueSuffix: ' ' + this.props.unit,
-                },
-            }],
+            ],
 
             credits: {
-                enabled: false
+                enabled: false,
             },
         });
     }
@@ -206,7 +220,7 @@ class SBH_GaugeChart extends React.Component {
 
     onResize = (width, height) => {
         this.chart.setSize(width, height, false);
-    }
+    };
 
     jsonArrayToSeriesData = (name, jsonArray, formatter) => {
         var seriesData = [];
@@ -214,7 +228,7 @@ class SBH_GaugeChart extends React.Component {
         jsonArray.map((jsonObject) => {
             // console.log(jsonObject);
 
-            if (formatter && typeof(formatter) === 'function') {
+            if (formatter && typeof formatter === 'function') {
                 seriesData.push(formatter(jsonObject[name]));
             } else {
                 seriesData.push(jsonObject[name]);
@@ -222,7 +236,7 @@ class SBH_GaugeChart extends React.Component {
         });
 
         return seriesData;
-    }
+    };
 
     render() {
         const { chartId } = this.state;
@@ -230,13 +244,13 @@ class SBH_GaugeChart extends React.Component {
         return (
             <Root>
                 {/* Chart */}
-                <ChartContainer
-                    id={chartId}>
+                <ChartContainer id={chartId}>
                     <ReactResizeDetector
                         resizableElementId={chartId}
                         handleWidth
                         handleHeight
-                        onResize={this.onResize} />
+                        onResize={this.onResize}
+                    />
                 </ChartContainer>
 
                 {/* Title */}
@@ -269,12 +283,10 @@ class SBH_GaugeChart extends React.Component {
                     <Value>
                         {this.props.value.toFixed(this.props.precision) + ' '}
                     </Value>
-                    <Unit>
-                        {this.props.unit}
-                    </Unit>
+                    <Unit>{this.props.unit}</Unit>
                 </ValueTextfit>
             </Root>
-        )
+        );
     }
 }
 

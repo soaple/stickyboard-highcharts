@@ -6,8 +6,8 @@ import styled from 'styled-components';
 import ReactResizeDetector from 'react-resize-detector';
 import Highcharts from 'highcharts';
 import UUIDv1 from 'uuid/v1';
-
 require('highcharts/modules/gantt.js')(Highcharts);
+
 const Root = styled.div`
     width: 100%;
     height: 100%;
@@ -25,8 +25,10 @@ class SBH_GanttChart extends React.Component {
     }
 
     componentDidMount() {
+        const { chartId } = this.state;
         const { title, data } = this.props;
-        this.chart = Highcharts.ganttChart(this.state.chartId, {
+
+        this.chart = Highcharts.ganttChart(chartId, {
             chart: {
                 height: '100%',
             },

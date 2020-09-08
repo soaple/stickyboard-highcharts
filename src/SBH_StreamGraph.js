@@ -19,20 +19,22 @@ const Root = styled.div`
 `;
 
 class SBH_StreamGraph extends React.Component {
-    constructor (props) {
+    constructor(props) {
         super(props);
 
         this.chart = {};
 
         this.state = {
-            chartId: UUIDv1()
-        }
+            chartId: UUIDv1(),
+        };
     }
 
     componentDidMount () {
+        const { chartId } = this.state;
+
         var colors = Highcharts.getOptions().colors;
 
-        this.chart = Highcharts.chart(this.state.chartId, {
+        this.chart = Highcharts.chart(chartId, {
             chart: {
                 type: 'streamgraph',
                 marginBottom: 30,
@@ -426,18 +428,18 @@ class SBH_StreamGraph extends React.Component {
                 enabled: false
             },
         });
-    }
+    };
 
     onResize = (width, height) => {
         this.chart.setSize(width, height, false);
-    }
+    };
 
     jsonArrayToSeriesData = (name, jsonArray, formatter) => {
         var seriesData = [];
         jsonArray.map((jsonObject) => {
             // console.log(jsonObject);
 
-            if (formatter && typeof(formatter) === 'function') {
+            if (formatter && typeof formatter === 'function') {
                 seriesData.push(formatter(jsonObject[name]));
             } else {
                 seriesData.push(jsonObject[name]);
@@ -445,21 +447,21 @@ class SBH_StreamGraph extends React.Component {
         });
 
         return seriesData;
-    }
+    };
 
     render() {
         const { chartId } = this.state;
 
         return (
-            <Root
-                id={chartId}>
+            <Root id={chartId}>
                 <ReactResizeDetector
                     resizableElementId={chartId}
                     handleWidth
                     handleHeight
-                    onResize={this.onResize} />
+                    onResize={this.onResize}
+                />
             </Root>
-        )
+        );
     }
 }
 

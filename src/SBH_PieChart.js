@@ -17,18 +17,20 @@ const Root = styled.div`
 `;
 
 class SBH_PieChart extends React.Component {
-    constructor (props) {
+    constructor(props) {
         super(props);
 
         this.chart = {};
 
         this.state = {
-            chartId: UUIDv1()
-        }
+            chartId: UUIDv1(),
+        };
     }
 
-    componentDidMount () {
-        this.chart = Highcharts.chart(this.state.chartId, {
+    componentDidMount() {
+        const { chartId } = this.state;
+
+        this.chart = Highcharts.chart(chartId, {
             chart: {
                 type: 'pie',
                 plotBackgroundColor: null,
@@ -40,11 +42,11 @@ class SBH_PieChart extends React.Component {
             },
 
             title: {
-                text: this.props.title
+                text: this.props.title,
             },
 
             tooltip: {
-                pointFormat: '<b>{point.percentage:.1f}%</b>'
+                pointFormat: '<b>{point.percentage:.1f}%</b>',
             },
 
             plotOptions: {
@@ -54,31 +56,37 @@ class SBH_PieChart extends React.Component {
                     colors: this.props.colorArray,
                     dataLabels: {
                         enabled: true,
-                        format: '{point.name}<br /><b>{point.percentage:.1f}%</b>',
+                        format:
+                            '{point.name}<br /><b>{point.percentage:.1f}%</b>',
                         style: {
-                            color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
-                        }
+                            color:
+                                (Highcharts.theme &&
+                                    Highcharts.theme.contrastTextColor) ||
+                                'black',
+                        },
                     },
-                }
+                },
             },
 
             series: [
                 {
                     name: this.props.valueKey,
-                    data: this.jsonArrayToSeriesData(this.props.valueKey, this.props.data),
-                }
+                    data: this.jsonArrayToSeriesData(
+                        this.props.valueKey,
+                        this.props.data
+                    ),
+                },
             ],
 
             credits: {
-                enabled: false
+                enabled: false,
             },
         });
     }
 
     onResize = (width, height) => {
-        console.log('onResize', width, height);
         this.chart.setSize(width, height, false);
-    }
+    };
 
     jsonArrayToSeriesData = (valueKey, jsonArray, formatter) => {
         var seriesData = [];
@@ -86,34 +94,34 @@ class SBH_PieChart extends React.Component {
         jsonArray.map((jsonObject) => {
             // console.log(jsonObject);
 
-            if (formatter && typeof(formatter) === 'function') {
+            if (formatter && typeof formatter === 'function') {
                 seriesData.push(formatter(jsonObject[valueKey]));
             } else {
                 let data = {
                     name: jsonObject['name'],
                     y: jsonObject[valueKey],
-                }
+                };
                 seriesData.push(data);
             }
         });
 
         // console.log(seriesData);
         return seriesData;
-    }
+    };
 
     render() {
         const { chartId } = this.state;
 
         return (
-            <Root
-                id={chartId}>
+            <Root id={chartId}>
                 <ReactResizeDetector
                     resizableElementId={chartId}
                     handleWidth
                     handleHeight
-                    onResize={this.onResize} />
+                    onResize={this.onResize}
+                />
             </Root>
-        )
+        );
     }
 }
 

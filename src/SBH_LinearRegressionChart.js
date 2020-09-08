@@ -4,9 +4,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import ReactResizeDetector from 'react-resize-detector';
-
 import Highcharts from 'highcharts';
-
 import UUIDv1 from 'uuid/v1';
 
 const Root = styled.div`
@@ -26,6 +24,7 @@ class SBH_LinearRegressionChart extends React.Component {
     }
 
     componentDidMount() {
+        const { chartId } = this.state;
         const {
             title,
             rawData,
@@ -33,7 +32,8 @@ class SBH_LinearRegressionChart extends React.Component {
             xAxisDataKey,
             yAxisDataKey,
         } = this.props;
-        this.chart = Highcharts.chart(this.state.chartId, {
+
+        this.chart = Highcharts.chart(chartId, {
             title: {
                 text: title,
             },
@@ -137,6 +137,7 @@ class SBH_LinearRegressionChart extends React.Component {
             // data of jsonArray is raw data.
             rawData.push([jsonObject.xValue, jsonObject.yValue]);
         });
+
         return rawData;
     };
 

@@ -24,6 +24,24 @@ class SBH_WordCloud extends React.Component {
         };
     }
 
+    componentDidMount() {
+        const { chartId } = this.state;
+        const { title, text, name } = this.props;
+
+        this.chart = Highcharts.chart(chartId, {
+            series: [
+                {
+                    type: 'wordcloud',
+                    data: this.textStringToJsonArray(text),
+                    name: name,
+                },
+            ],
+            title: {
+                text: title,
+            },
+        });
+    }
+
     textStringToJsonArray = (text) => {
         const lines = text.split(/[,\. ]+/g);
         const data = Highcharts.reduce(
@@ -47,22 +65,6 @@ class SBH_WordCloud extends React.Component {
         );
         return data;
     };
-
-    componentDidMount() {
-        const { title, text, name } = this.props;
-        this.chart = Highcharts.chart(this.state.chartId, {
-            series: [
-                {
-                    type: 'wordcloud',
-                    data: this.textStringToJsonArray(text),
-                    name: name,
-                },
-            ],
-            title: {
-                text: title,
-            },
-        });
-    }
 
     onResize = (width, height) => {
         this.chart.setSize(width, height, false);

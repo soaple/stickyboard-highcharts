@@ -7,6 +7,7 @@ import ReactResizeDetector from 'react-resize-detector';
 import Highcharts from 'highcharts';
 import UUIDv1 from 'uuid/v1';
 require('highcharts/modules/histogram-bellcurve.js')(Highcharts);
+
 const Root = styled.div`
     width: 100%;
     height: 100%;
@@ -24,6 +25,7 @@ class SBH_HistogramChart extends React.Component {
     }
 
     componentDidMount() {
+        const { chartId } = this.state;
         const {
             title,
             subTitle,
@@ -31,7 +33,8 @@ class SBH_HistogramChart extends React.Component {
             dataName,
             yAxisDataKey,
         } = this.props;
-        this.chart = Highcharts.chart(this.state.chartId, {
+
+        this.chart = Highcharts.chart(chartId, {
             chart: {
                 type: 'column',
             },
@@ -76,6 +79,7 @@ class SBH_HistogramChart extends React.Component {
         jsonArray.map((jsonObject) => {
             categories.push(jsonObject.xValue);
         });
+
         return categories;
     };
 
@@ -84,6 +88,7 @@ class SBH_HistogramChart extends React.Component {
         jsonArray.map((jsonObject) => {
             data.push(jsonObject.yValue);
         });
+
         return data;
     };
 

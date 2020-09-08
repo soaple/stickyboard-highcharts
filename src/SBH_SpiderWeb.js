@@ -17,18 +17,20 @@ const Root = styled.div`
 `;
 
 class SBH_SpiderWeb extends React.Component {
-    constructor (props) {
+    constructor(props) {
         super(props);
 
         this.chart = {};
 
         this.state = {
-            chartId: UUIDv1()
-        }
+            chartId: UUIDv1(),
+        };
     }
 
-    componentDidMount () {
-        this.chart = Highcharts.chart(this.state.chartId, {
+    componentDidMount() {
+        const { chartId } = this.state;
+
+        this.chart = Highcharts.chart(chartId, {
             chart: {
                 polar: true,
                 type: 'line',
@@ -39,67 +41,77 @@ class SBH_SpiderWeb extends React.Component {
             },
 
             pane: {
-                size: '80%'
+                size: '80%',
             },
 
             xAxis: {
-                categories: ['Sales', 'Marketing', 'Development', 'Customer Support',
-                'Information Technology', 'Administration'],
+                categories: [
+                    'Sales',
+                    'Marketing',
+                    'Development',
+                    'Customer Support',
+                    'Information Technology',
+                    'Administration',
+                ],
                 tickmarkPlacement: 'on',
-                lineWidth: 0
+                lineWidth: 0,
             },
 
             yAxis: {
                 gridLineInterpolation: 'polygon',
                 lineWidth: 0,
-                min: 0
+                min: 0,
             },
 
             tooltip: {
                 shared: true,
-                pointFormat: '<span style="color:{series.color}">{series.name}: <b>${point.y:,.0f}</b><br/>'
+                pointFormat:
+                    '<span style="color:{series.color}">{series.name}: <b>${point.y:,.0f}</b><br/>',
             },
 
             legend: {
                 align: 'center',
                 verticalAlign: 'bottom',
                 y: 0,
-                layout: 'vertical'
+                layout: 'vertical',
             },
 
-            series: [{
-                name: 'Allocated Budget',
-                data: [43000, 19000, 60000, 35000, 17000, 10000],
-                pointPlacement: 'on'
-            }, {
-                name: 'Actual Spending',
-                data: [50000, 39000, 42000, 31000, 26000, 14000],
-                pointPlacement: 'on'
-            }],
+            series: [
+                {
+                    name: 'Allocated Budget',
+                    data: [43000, 19000, 60000, 35000, 17000, 10000],
+                    pointPlacement: 'on',
+                },
+                {
+                    name: 'Actual Spending',
+                    data: [50000, 39000, 42000, 31000, 26000, 14000],
+                    pointPlacement: 'on',
+                },
+            ],
 
             credits: {
-                enabled: false
+                enabled: false,
             },
         });
     }
 
     onResize = (width, height) => {
         this.chart.setSize(width, height, false);
-    }
+    };
 
     render() {
         const { chartId } = this.state;
 
         return (
-            <Root
-                id={chartId}>
+            <Root id={chartId}>
                 <ReactResizeDetector
                     resizableElementId={chartId}
                     handleWidth
                     handleHeight
-                    onResize={this.onResize} />
+                    onResize={this.onResize}
+                />
             </Root>
-        )
+        );
     }
 }
 

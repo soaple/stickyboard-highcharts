@@ -19,21 +19,22 @@ const Root = styled.div`
 `;
 
 class SBH_TreeMap extends React.Component {
-    constructor (props) {
+    constructor(props) {
         super(props);
 
         this.chart = {};
 
         this.state = {
-            chartId: UUIDv1()
-        }
+            chartId: UUIDv1(),
+        };
     }
 
-    componentDidMount () {
-        this.chart = Highcharts.chart(this.state.chartId, {
+    componentDidMount() {
+        const { chartId } = this.state;
 
+        this.chart = Highcharts.chart(chartId, {
             title: {
-                text: this.props.title
+                text: this.props.title,
             },
 
             // series: [
@@ -45,39 +46,49 @@ class SBH_TreeMap extends React.Component {
             //     }
             // ],
 
-            series: [{
-                type: 'treemap',
-                layoutAlgorithm: 'squarified',
-                data: [{
-                    name: 'A',
-                    value: 6,
-                    colorValue: 1
-                }, {
-                    name: 'B',
-                    value: 6,
-                    colorValue: 2
-                }, {
-                    name: 'C',
-                    value: 4,
-                    colorValue: 3
-                }, {
-                    name: 'D',
-                    value: 3,
-                    colorValue: 4
-                }, {
-                    name: 'E',
-                    value: 2,
-                    colorValue: 5
-                }, {
-                    name: 'F',
-                    value: 2,
-                    colorValue: 6
-                }, {
-                    name: 'G',
-                    value: 1,
-                    colorValue: 7
-                }]
-            }],
+            series: [
+                {
+                    type: 'treemap',
+                    layoutAlgorithm: 'squarified',
+                    data: [
+                        {
+                            name: 'A',
+                            value: 6,
+                            colorValue: 1,
+                        },
+                        {
+                            name: 'B',
+                            value: 6,
+                            colorValue: 2,
+                        },
+                        {
+                            name: 'C',
+                            value: 4,
+                            colorValue: 3,
+                        },
+                        {
+                            name: 'D',
+                            value: 3,
+                            colorValue: 4,
+                        },
+                        {
+                            name: 'E',
+                            value: 2,
+                            colorValue: 5,
+                        },
+                        {
+                            name: 'F',
+                            value: 2,
+                            colorValue: 6,
+                        },
+                        {
+                            name: 'G',
+                            value: 1,
+                            colorValue: 7,
+                        },
+                    ],
+                },
+            ],
 
             // responsive: {
             //     rules: [{
@@ -111,21 +122,21 @@ class SBH_TreeMap extends React.Component {
             // },
 
             credits: {
-                enabled: false
+                enabled: false,
             },
         });
     }
 
     onResize = (width, height) => {
         this.chart.setSize(width, height, false);
-    }
+    };
 
     jsonArrayToSeriesData = (name, jsonArray, formatter) => {
         var seriesData = [];
         jsonArray.map((jsonObject) => {
             // console.log(jsonObject);
 
-            if (formatter && typeof(formatter) === 'function') {
+            if (formatter && typeof formatter === 'function') {
                 seriesData.push(formatter(jsonObject[name]));
             } else {
                 seriesData.push(jsonObject[name]);
@@ -133,21 +144,21 @@ class SBH_TreeMap extends React.Component {
         });
 
         return seriesData;
-    }
+    };
 
     render() {
         const { chartId } = this.state;
 
         return (
-            <Root
-                id={chartId}>
+            <Root id={chartId}>
                 <ReactResizeDetector
                     resizableElementId={chartId}
                     handleWidth
                     handleHeight
-                    onResize={this.onResize} />
+                    onResize={this.onResize}
+                />
             </Root>
-        )
+        );
     }
 }
 
