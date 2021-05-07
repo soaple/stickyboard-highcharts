@@ -1,6 +1,6 @@
 {
     "name": "@stickyboard/highcharts",
-    "version": "0.1.7",
+    "version": "0.1.8",
     "description": "Highcharts components for StickyBoard",
     "main": "dist/index.js",
     "scripts": {
@@ -9,7 +9,7 @@
         "build": "webpack"
     },
     "dependencies": {
-        "highcharts": "^8.2.0",
+        "highcharts": "^9.1.0",
         "moment": "^2.24.0",
         "moment-timezone": "^0.5.26",
         "prop-types": "^15.7.2",
